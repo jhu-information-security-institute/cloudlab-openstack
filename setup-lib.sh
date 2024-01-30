@@ -300,7 +300,7 @@ while [ ! $success -eq 0 ]; do
 done
 
 if [ ! -e $OURDIR/geni.key ]; then
-    geni-get key > $OURDIR/geni.key
+    geni-get -s boss key > $OURDIR/geni.key
     cat $OURDIR/geni.key | grep -q END\ .\*\PRIVATE\ KEY
     if [ ! $? -eq 0 ]; then
 	echo "ERROR: could not get geni key; aborting!"
@@ -308,7 +308,7 @@ if [ ! -e $OURDIR/geni.key ]; then
     fi
 fi
 if [ ! -e $OURDIR/geni.certificate ]; then
-    geni-get certificate > $OURDIR/geni.certificate
+    geni-get -s boss certificate > $OURDIR/geni.certificate
     cat $OURDIR/geni.certificate | grep -q END\ CERTIFICATE
     if [ ! $? -eq 0 ]; then
 	echo "ERROR: could not get geni cert; aborting!"
@@ -329,7 +329,7 @@ if [ ! -e $OURDIR/manifests.xml -o $UPDATING -ne 0 ]; then
     if [ ! $? -eq 0 ]; then
 	# Fall back to geni-get
 	echo "WARNING: falling back to getting manifest from AM, not Portal -- multi-site experiments will not work fully!"
-	geni-get manifest > $OURDIR/manifests.0.xml
+	geni-get -s boss manifest > $OURDIR/manifests.0.xml
     fi
 fi
 
@@ -610,7 +610,7 @@ else
     DBDSTRING="mysql"
 fi
 
-SWAPPER_EMAIL=`geni-get slice_email`
+SWAPPER_EMAIL=`geni-get -s boss slice_email`
 
 PUBLICADDRS=`cat $OURDIR/manifests.*.xml | perl -e '$found = 0; while (<STDIN>) { if ($_ =~ /\<[\d\w:]*routable_pool [^\>\<]*\/>/) { print STDERR "DEBUG: found empty pool: $_\n"; next; } if ($_ =~ /\<[\d\w:]*routable_pool [^\>]*client_id=['"'"'"]'$NETWORKMANAGER'['"'"'"]/) { $found = 1; print STDERR "DEBUG: found: $_\n" } if ($found) { while ($_ =~ m/\<emulab:ipv4 address="([\d.]+)\" netmask=\"([\d\.]+)\"/g) { print "$1\n"; } } if ($found && $_ =~ /routable_pool\>/) { print STDERR "DEBUG: end found: $_\n"; $found = 0; } }' | xargs`
 PUBLICCOUNT=0

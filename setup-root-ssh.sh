@@ -27,7 +27,7 @@ rm -f /root/.ssh/${KEYNAME} /root/.ssh/${KEYNAME}.pub
 ## Figure out our strategy.  Are we using the new geni_certificate and
 ## geni_key support to generate the same keypair on each host, or not.
 ##
-geni-get key > $OURDIR/$KEYNAME
+geni-get -s boss key > $OURDIR/$KEYNAME
 chmod 600 $OURDIR/${KEYNAME}
 if [ -s $OURDIR/${KEYNAME} ] ; then
     ssh-keygen -f $OURDIR/${KEYNAME} -y > $OURDIR/${KEYNAME}.pub
