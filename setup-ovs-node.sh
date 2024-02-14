@@ -145,6 +145,11 @@ else
     mv /etc/udev/rules.d/99-emulab-networkd.rules \
         /etc/udev/rules.d/99-emulab-networkd.rules.NO
     systemctl disable emulab-udev-settle.service
+    rm -fv \
+        /lib/systemd/system/systemd-networkd.socket.requires/emulab-udev-settle-networkd.service \
+        /lib/systemd/system/systemd-networkd.service.requires/emulab-udev-settle-networkd.service \
+        /etc/systemd/system/systemd-networkd.socket.requires/emulab-udev-settle-networkd.service \
+        /etc/systemd/system/systemd-networkd.service.requires/emulab-udev-settle-networkd.service
     cat <<EOF >/etc/systemd/system/testbed-pre-static-control-network.service
 [Unit]
 Description=Testbed Static Control Network Services
