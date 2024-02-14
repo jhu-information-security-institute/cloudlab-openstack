@@ -479,9 +479,13 @@ cp -p $OURDIR/mgmt-hosts /var/run/emulab/hosts.head
 exit 0
 EOF
 
-    mkdir -p /etc/emulab/run/rcmanifest.d
-    touch /etc/emulab/run/rcmanifest.d/0.openstack-rcmanifest.sh
-    cat <<EOF >> /etc/emulab/run/rcmanifest.d/0.openstack-rcmanifest.sh
+    RCMDIR=/usr/local/etc/emulab/run/rcmanifest.d
+    if [ -d /usr/libexec/emulab ]; then
+	RCMDIR=/etc/emulab/run/rcmanifest.d
+    fi
+    mkdir -p $RCMDIR
+    touch $RCMDIR/0.openstack-rcmanifest.sh
+    cat <<EOF >> $RCMDIR/0.openstack-rcmanifest.sh
 HOOK SERVICE=rc.hostnames ENV=boot WHENCE=every OP=boot POINT=pre FATAL=0 FILE=$OURDIR/bin/rc.hostnames-openstack ARGV="" 
 EOF
 else
