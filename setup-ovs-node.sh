@@ -475,7 +475,7 @@ done
 #
 # Set the hostname for later after reboot!
 #
-echo $NFQDN > /etc/hostname
+(echo $NFQDN | tr '[:upper:]' '[:lower:]') > /etc/hostname
 
 service_restart openvswitch-switch
 

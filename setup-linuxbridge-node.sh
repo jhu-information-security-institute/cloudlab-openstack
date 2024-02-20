@@ -464,7 +464,7 @@ fi
 #
 # Set the hostname for later after reboot!
 #
-echo $NFQDN > /etc/hostname
+(echo $NFQDN | tr '[:upper:]' '[:lower:]') > /etc/hostname
 
 grep -q DYNRUNDIR /etc/emulab/paths.sh
 if [ $? -eq 0 ]; then
