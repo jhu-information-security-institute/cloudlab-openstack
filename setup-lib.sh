@@ -432,6 +432,7 @@ OSYOGA=25
 OSZED=26
 OSANTELOPE=27
 OSBOBCAT=28
+OSCARACAL=29
 
 . /etc/lsb-release
 #
@@ -458,6 +459,7 @@ if [ ! "x$OSRELEASE" = "x" ]; then
     if [ $OSCODENAME = "zed" ]; then OSVERSION=$OSZED ; fi
     if [ $OSCODENAME = "antelope" ]; then OSVERSION=$OSANTELOPE ; fi
     if [ $OSCODENAME = "bobcat" ]; then OSVERSION=$OSBOBCAT ; fi
+	if [ $OSCODENAME = "caracal" ]; then OSVERSION=$OSCARACAL ; fi
 
     #
     # We only use cloudarchive for LTS images!
